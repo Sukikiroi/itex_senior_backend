@@ -18,47 +18,45 @@ export class AppointmentsController {
   constructor(
     private readonly appointmentsService: AppointmentsService,
     private caslAbilityFactory: CaslAbilityFactory
-    ) 
-    { }
+  ) { }
 
   @Post()
   create(@Body() createAppointmentDto: CreateAppointmentDto) {
     return this.appointmentsService.create(createAppointmentDto);
   }
-  @UseGuards(AuthGuard,PoliciesGuard)
+  @UseGuards(AuthGuard, PoliciesGuard)
   @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, Appointment))
-   @Get()
+  @Get()
   findAll() {
     return this.appointmentsService.findAll();
 
-  
+
   }
 
 
 
   @Get(':id')
-  @UseGuards(AuthGuard,PoliciesGuard)
+  @UseGuards(AuthGuard, PoliciesGuard)
   @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, Appointment))
-
   async findOne(@Param('id') id: string, @Req() req) {
     const ability = this.caslAbilityFactory.createForUser(req.user);
-    const appointment =  this.appointmentsService.findOne(+id);
+    const appointment = this.appointmentsService.findOne(+id);
     if (ability.can(Action.Read, await appointment)) {
       // Authorized only to read his own appointemnts
-
       return this.appointmentsService.findOne(+id);
     }
   }
 
-
-  @UseGuards(AuthGuard,PoliciesGuard)
   @Patch(':id')
+  @UseGuards(AuthGuard, PoliciesGuard)
+  @CheckPolicies((ability: AppAbility) => ability.can(Action.Read, Appointment))
   update(@Param('id') id: string, @Body() updateAppointmentDto: UpdateAppointmentDto) {
     return this.appointmentsService.update(+id, updateAppointmentDto);
   }
-  
+
   @Delete(':id')
-  @UseGuards(AuthGuard,PoliciesGuard)
+  @UseGuards(AuthGuard, PoliciesGuard)
+  @CheckPolicies((ability: AppAbility) => ability.can(Action.Delete, Appointment))
   remove(@Param('id') id: string) {
     return this.appointmentsService.remove(+id);
   }

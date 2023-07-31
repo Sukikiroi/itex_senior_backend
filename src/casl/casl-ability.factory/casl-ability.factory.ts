@@ -3,10 +3,12 @@ import { Injectable } from "@nestjs/common";
 import { Appointment } from "src/appointments/entities/appointment.entity";
 import { Action } from "src/common/enums/permission.enum";
 import { Doctor } from "src/doctors/entities/doctor.entity";
+import { MedicalHistory } from "src/medical_historys/entities/medical_history.entity";
 import { Patient } from "src/patients/entities/patient.entity";
+import { Prescription } from "src/prescriptions/entities/prescription.entity";
 import { User } from "src/users/entities/user.entity";
 
-type Subjects = InferSubjects<typeof Appointment | typeof User | typeof Doctor> | 'all';
+type Subjects = InferSubjects<typeof Appointment | typeof User | typeof Doctor | typeof Patient | typeof MedicalHistory | typeof Prescription> | 'all';
 export type AppAbility = MongoAbility<[Action, Subjects]>
 
 
@@ -18,12 +20,14 @@ export class CaslAbilityFactory {
 
     if (user.type = 'SAdmin') {
       can(Action.Manage, 'all'); // read-write access to everything
-    } else {
+    }
+
+    if (user.type = 'staff') {
       can(Action.Read, 'all'); // read-only access to everything
-      cannot(Action.Read, Appointment, { id: { $eq: 1 } }).because('Only owner');
-
-
-
+    }
+    else {
+      cannot(Action.Read, Appointment, { id: { $ne: user.id } }).because('Only owner can read his Appointments ');
+      cannot(Action.Delete, Prescription, { id: { $ne: user.id } }).because('Only owner can delete his own Prescription ');
 
     }
 

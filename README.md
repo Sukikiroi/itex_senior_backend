@@ -35,7 +35,7 @@ $ npm run start:prod
 
 ## Docker Env
 ```bash
-$ docker-composer build
+$ docker-compose build
 $ docker-compose up
 
 ```

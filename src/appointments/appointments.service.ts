@@ -4,6 +4,8 @@ import { UpdateAppointmentDto } from './dto/update-appointment.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Appointment } from './entities/appointment.entity';
 import { Repository } from 'typeorm';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory/casl-ability.factory';
+
 
 @Injectable()
 export class AppointmentsService {
@@ -11,6 +13,8 @@ export class AppointmentsService {
   constructor(
     @InjectRepository(Appointment)
     private appointmentRepository: Repository<Appointment>,
+    private caslAbilityFactory: CaslAbilityFactory
+
   ) { }
 
   
@@ -35,7 +39,8 @@ export class AppointmentsService {
   }
 
   update(id: number, updateAppointmentDto: UpdateAppointmentDto) {
-    return `This action updates a #${id} appointment`;
+
+    return this.appointmentRepository.update(id,updateAppointmentDto)
   }
 
   remove(id: number) {
