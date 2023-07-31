@@ -13,13 +13,16 @@ import { dbConfig } from './config/database';
 import { MedicationsModule } from './medications/medications.module';
 import { RolesModule } from './roles/roles.module';
 import { CaslModule } from './casl/casl.module';
-import { APP_GUARD } from '@nestjs/core';
-import { PoliciesGuard } from './common/guards/policies.guard';
+ 
 import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
-  imports: [ConfigModule.forRoot(),DoctorsModule, PatientsModule, AppointmentsModule, PrescriptionsModule, MedicalHistorysModule, AuthModule, UsersModule, TypeOrmModule.forRoot(dbConfig()), MedicationsModule, RolesModule, CaslModule],
+  imports: [ConfigModule.forRoot({
+    isGlobal: true,
+    load:[dbConfig]
+    
+  }), DoctorsModule, PatientsModule, AppointmentsModule, PrescriptionsModule, MedicalHistorysModule, AuthModule, UsersModule, TypeOrmModule.forRoot(dbConfig()), MedicationsModule, RolesModule, CaslModule],
   controllers: [AppController],
   providers: [AppService],
 })
