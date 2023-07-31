@@ -20,14 +20,19 @@ export class CaslAbilityFactory {
 
     if (user.type = 'SAdmin') {
       can(Action.Manage, 'all'); // read-write access to everything
+      cannot(Action.Create,Patient)
     }
 
     if (user.type = 'staff') {
-      can(Action.Read, 'all'); // read-only access to everything
+      can(Action.Read, Patient); //  view patient information
+      can(Action.Update, Patient); //  view patient information
+      can(Action.Read, Appointment); // view appointments
+
     }
     else {
       cannot(Action.Read, Appointment, { id: { $ne: user.id } }).because('Only owner can read his Appointments ');
       cannot(Action.Delete, Prescription, { id: { $ne: user.id } }).because('Only owner can delete his own Prescription ');
+      cannot(Action.Read, MedicalHistory, { id: { $ne: user.id } }).because(' should be able to view their own medical histories');
 
     }
 

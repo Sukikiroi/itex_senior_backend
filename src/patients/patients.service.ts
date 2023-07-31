@@ -43,7 +43,7 @@ export class PatientsService {
   }
 
   update(id: number, updatePatientDto: UpdatePatientDto) {
-    return `This action updates a #${id} patient`;
+    return this.patientRepository.update(id,updatePatientDto);
   }
 
   remove(id: number) {

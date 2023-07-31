@@ -18,6 +18,8 @@ export class PatientsController {
   ) { }
 
   @Post()
+  @UseGuards(AuthGuard, PoliciesGuard)
+  @CheckPolicies((ability: AppAbility) => ability.can(Action.Create, Patient))
   create(@Body() createPatientDto: CreatePatientDto) {
     return this.patientsService.create(createPatientDto);
   }
