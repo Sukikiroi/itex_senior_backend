@@ -33,8 +33,9 @@ export class PatientsService {
     return result
   }
 
-  findAll() {
-    return `This action returns all patients`;
+ findAll() {
+
+    return this.patientRepository.find({ relations: { user: true } });
   }
 
   findOne(id: number) {

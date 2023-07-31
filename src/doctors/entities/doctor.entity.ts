@@ -3,7 +3,7 @@ import { Appointment } from "src/appointments/entities/appointment.entity"
 import { MedicalHistory } from "src/medical_historys/entities/medical_history.entity"
 import { Prescription } from "src/prescriptions/entities/prescription.entity"
 import { User } from "src/users/entities/user.entity"
-import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany } from "typeorm"
+import { Entity, PrimaryGeneratedColumn, Column, OneToOne, JoinColumn, OneToMany, CreateDateColumn, UpdateDateColumn } from "typeorm"
 
 @Entity()
 export class Doctor {
@@ -35,4 +35,11 @@ export class Doctor {
 
     @OneToMany(() => MedicalHistory, (medical_history) => medical_history.doctor)
     medical_historys: MedicalHistory[]
+
+
+    @CreateDateColumn()
+    created_at: Date;
+ 
+    @UpdateDateColumn()
+    updated_at: Date;
 }

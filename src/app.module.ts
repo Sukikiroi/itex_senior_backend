@@ -10,19 +10,19 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dbConfig } from './config/database';
-import { MedicationsModule } from './medications/medications.module';
 import { RolesModule } from './roles/roles.module';
 import { CaslModule } from './casl/casl.module';
- 
 import { ConfigModule } from '@nestjs/config';
 
 
 @Module({
   imports: [ConfigModule.forRoot({
     isGlobal: true,
-    load:[dbConfig]
-    
-  }), DoctorsModule, PatientsModule, AppointmentsModule, PrescriptionsModule, MedicalHistorysModule, AuthModule, UsersModule, TypeOrmModule.forRoot(dbConfig()), MedicationsModule, RolesModule, CaslModule],
+    load: [dbConfig]
+
+  }),
+
+  TypeOrmModule.forRoot(dbConfig()), DoctorsModule, PatientsModule, AppointmentsModule, PrescriptionsModule, MedicalHistorysModule, AuthModule, UsersModule, RolesModule, CaslModule],
   controllers: [AppController],
   providers: [AppService],
 })

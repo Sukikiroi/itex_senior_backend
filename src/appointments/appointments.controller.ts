@@ -9,7 +9,10 @@ import { AppAbility, CaslAbilityFactory } from 'src/casl/casl-ability.factory/ca
 import { Action } from 'src/common/enums/permission.enum';
 import { Appointment } from './entities/appointment.entity';
 import { User } from 'src/users/entities/user.entity';
+import { ApiTags } from '@nestjs/swagger';
 
+
+@ApiTags("appointments")
 @Controller('appointments')
 export class AppointmentsController {
   constructor(

@@ -12,21 +12,7 @@ export class UsersService {
     private usersRepository: Repository<User>,
   ) {}
 
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-      permissions:[{write:false}]
 
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-      permissions:[{write:true}]
-    },
-  ];
 
   async create(createUserDto: UsersDTO): Promise<User> {
     const user = new User();

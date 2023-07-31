@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn,Unique, BeforeInsert, BeforeUpdate, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn,Unique, BeforeInsert, BeforeUpdate, OneToMany, ManyToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import * as bcryptjs from 'bcryptjs';
 import { Role } from 'src/roles/entities/role.entity';
 import { isEmail } from 'class-validator';
@@ -37,4 +37,10 @@ export class User {
 
   @Column({ default: true })
   isActive: boolean;
+
+  @CreateDateColumn()
+  created_at: Date;
+
+  @UpdateDateColumn()
+  updated_at: Date;
 }
